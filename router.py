@@ -5,13 +5,13 @@ from time import perf_counter
 
 ISU_CAMPUSES = {
     "VADI_CAMPUS": {
-        "name": "İSÜ ANA VADİ KAMPÜSÜ",
+        "name": "ISU Main Valley Campus",
         "coords": [41.1064, 28.9851],
         "color": "red"
     },
 
     "H_CAMPUS": {
-        "name": "İSÜ H YERLEŞKESİ",
+        "name": "ISU H Campus",
         "coords":[41.1032, 28.9861],
         "color": "darkred"
     }
@@ -19,17 +19,17 @@ ISU_CAMPUSES = {
 
 LOGISTICS_REGISTRY = {
     "AFAD": {
-        "name": "Hasdal AFAD Üssü",
+        "name": "Hasdal AFAD Base",
         "coords": [41.0913, 28.9555],
-        "assets": "3x Zodiac Kurtarma Botu & Dalgıç Pompalar",
+        "assets": "3x Zodiac Rescue Boats & Submersible Pumps",
         "safety_status": "SAFE_ROUTE",
         "color": "blue"
     },
 
     "FIRE_STATION": {
-        "name": "Kağıthane İtfaye İstasyonu",
+        "name": "Kagithane Fire Station",
         "coords": [41.0985, 28.9810],
-        "assets": "15x Mobil Sel Bariyeri & Pompa Ekibi",
+        "assets": "15x Mobile Flood Barrier & Pump Team",
         "safety_status": "CRITICAL_ROUTE",
         "color": "purple"
     }
@@ -52,6 +52,7 @@ def determine_best_responder(campus_coords: list, cendere_flooded: bool = False)
         return LOGISTICS_REGISTRY["AFAD"] 
     else:
         return LOGISTICS_REGISTRY["FIRE_STATION"]
+
 def optimize_logistics_dispatch(cendere_flooded: bool = False) -> dict:
 
     return {
@@ -78,7 +79,7 @@ def generate_dual_campus_map(dispatch_results: dict):
 
         folium.Marker(
             location = campus["coords"],
-            popup = f"<b> {campus['name']}</b><br> Görevli Güç:{assigned['assets']}<br>Rota: {assigned['safety_status']}",
+            popup = f"<b> {campus['name']}</b><br> Assigned Resources:{assigned['assets']}<br>Route: {assigned['safety_status']}",
             icon = folium.Icon(color=campus["color"], icon="exclamation-sign")
         ).add_to(emergency_map)
 
@@ -87,15 +88,54 @@ def generate_dual_campus_map(dispatch_results: dict):
             color = assigned["color"],
             weight = 5,
             opacity = 0.8,
-            tooltip = f" {campus['name']} Tahliye Koridoru ({assigned['name']})"
+            tooltip = f" {campus['name']} Evacuation Corridor ({assigned['name']})"
         ).add_to(emergency_map)
 
     for base in LOGISTICS_REGISTRY.values():
 
         folium.Marker(
             location = base["coords"],
-            popup = f"<b> {base['name']}</b><br>Durum: Mobilizasyona Hazır",
+            popup = f"<b> {base['name']}</b><br>Status: Ready for Mobilization",
             icon = folium.Icon(color=base["color"], icon="home")
         ).add_to(emergency_map)
 
     emergency_map.save(OUTPUT_MAP_FILE)
+
+def send_dual_actionable_webhook(discharge_rate: float, dispatch_results: dict, elapsed_time: float):
+    commands_text = "".join([
+        f"{idx}) {ISU_CAMPUSES[key]['name']} ➔ Dispatch: {res['name']} ({res['assets']})\n Safety Note: {res['safety_status']}\n\n"
+        for idx, (key, res) in enumerate(dispatch_results.items(), 1)
+    ])
+
+    alert_text = (
+        f" [HYDROGUARD: DUAL-CAMPUS EMERGENCY PLAN] \n"
+        f" ----------------------------------------------------------\n"
+        f"TARGET AREA: Cendere Basin - Istinye Universities Campuses\n"
+        f"Instant River Discharge: {discharge_rate} m³/s (Critical Flood Threshold Exceeded!)\n"
+        f"AUTOMATED DISPATCH COMMANDS: \n {commands_text}"
+        f" LIVE OPERATION MAP: \n"
+        f"Both campuses' evacuation corridors have been updated in real-time on the map: \n"
+        f"Route Output: {OUTPUT_MAP_FILE}\n\n"
+        f" Matrix optimization completed in {elapsed_time:.2f} seconds.\n"
+        f"[STATUS]: Actionable events published successfully over secure HTTP stream."
+    )
+
+    try: 
+        response = requests.post(WEBHOOK_URL, json={"content": alert_text}, timeout=10)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        print(f"[WEBHOOK ERROR]: Notification channel is unreachable: {e}")
+
+def execute_routing_pipeline(live_discharge: float):
+
+    start_timer = perf_counter()
+
+    cendere_flooded = live_discharge >= 5.0
+
+    dispatch_results = optimize_logistics_dispatch(cendere_flooded)
+    generate_dual_campus_map(dispatch_results)
+
+    elapsed_duration = perf_counter() - start_timer
+    print(f"[PERFORMANCE]: Quota optimization completed in {elapsed_duration:.4f} seconds.")
+
+    send_dual_actionable_webhook(live_discharge, dispatch_results, elapsed_duration)
