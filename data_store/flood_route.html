@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_945f33fd423659e476dd707599f73870 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_945f33fd423659e476dd707599f73870" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_945f33fd423659e476dd707599f73870 = L.map(
+                "map_945f33fd423659e476dd707599f73870",
+                {
+                    center: [41.105, 28.9855],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 14,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_945f33fd423659e476dd707599f73870);
+
+            
+
+        
+    
+            var tile_layer_0aacb1b37abdd6de4a0c257987b82498 = L.tileLayer(
+                "https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=cb1_50vt_1_504d45160fd062dea54e09ec",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://cartodb.com/\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_0aacb1b37abdd6de4a0c257987b82498.addTo(map_945f33fd423659e476dd707599f73870);
+        
+    
+            var marker_3f0abb898a08b35cfbf3c4089ba3d511 = L.marker(
+                [41.1064, 28.9851],
+                {
+}
+            ).addTo(map_945f33fd423659e476dd707599f73870);
+        
+    
+            var icon_d456422aa46a070b588222774f46e60a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "exclamation-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c9e107f6210457858ec2e68d66ce1bd9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2096edb9004dfa91f0f966922510819b = $(`<div id="html_2096edb9004dfa91f0f966922510819b" style="width: 100.0%; height: 100.0%;"><b> İSÜ ANA VADİ KAMPÜSÜ</b><br> Görevli Güç:3x Zodiac Kurtarma Botu & Dalgıç Pompalar<br>Rota: SAFE_ROUTE</div>`)[0];
+                popup_c9e107f6210457858ec2e68d66ce1bd9.setContent(html_2096edb9004dfa91f0f966922510819b);
+            
+        
+
+        marker_3f0abb898a08b35cfbf3c4089ba3d511.bindPopup(popup_c9e107f6210457858ec2e68d66ce1bd9)
+        ;
+
+        
+    
+    
+                marker_3f0abb898a08b35cfbf3c4089ba3d511.setIcon(icon_d456422aa46a070b588222774f46e60a);
+            
+    
+            var poly_line_41046c9a7c5a456f4aa57bee2fbeb7f0 = L.polyline(
+                [[41.0913, 28.9555], [41.1064, 28.9851]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_945f33fd423659e476dd707599f73870);
+        
+    
+            poly_line_41046c9a7c5a456f4aa57bee2fbeb7f0.bindTooltip(
+                `<div>
+                      İSÜ ANA VADİ KAMPÜSÜ Tahliye Koridoru (Hasdal AFAD Üssü)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_eba70ac292a516dfbe0ab5331fb36728 = L.marker(
+                [41.1032, 28.9861],
+                {
+}
+            ).addTo(map_945f33fd423659e476dd707599f73870);
+        
+    
+            var icon_531d3008966069d8d01f5becfbeb584b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "exclamation-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f11053941bb027397c01d6b86197a982 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2cdde0339ce9b8dd0224a07ae881054c = $(`<div id="html_2cdde0339ce9b8dd0224a07ae881054c" style="width: 100.0%; height: 100.0%;"><b> İSÜ H YERLEŞKESİ</b><br> Görevli Güç:3x Zodiac Kurtarma Botu & Dalgıç Pompalar<br>Rota: SAFE_ROUTE</div>`)[0];
+                popup_f11053941bb027397c01d6b86197a982.setContent(html_2cdde0339ce9b8dd0224a07ae881054c);
+            
+        
+
+        marker_eba70ac292a516dfbe0ab5331fb36728.bindPopup(popup_f11053941bb027397c01d6b86197a982)
+        ;
+
+        
+    
+    
+                marker_eba70ac292a516dfbe0ab5331fb36728.setIcon(icon_531d3008966069d8d01f5becfbeb584b);
+            
+    
+            var poly_line_7e8663d76552fd4f196a7eae99868e16 = L.polyline(
+                [[41.0913, 28.9555], [41.1032, 28.9861]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_945f33fd423659e476dd707599f73870);
+        
+    
+            poly_line_7e8663d76552fd4f196a7eae99868e16.bindTooltip(
+                `<div>
+                      İSÜ H YERLEŞKESİ Tahliye Koridoru (Hasdal AFAD Üssü)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_0a8d42d283109528bba5b745ec4f817c = L.marker(
+                [41.0913, 28.9555],
+                {
+}
+            ).addTo(map_945f33fd423659e476dd707599f73870);
+        
+    
+            var icon_89bf39343de27e5cbcfa9c9cd2c65c14 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2abad658c4c9240f05631ffb1b719bea = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_696d701f772e11bb529618fc77d3ac21 = $(`<div id="html_696d701f772e11bb529618fc77d3ac21" style="width: 100.0%; height: 100.0%;"><b> Hasdal AFAD Üssü</b><br>Durum: Mobilizasyona Hazır</div>`)[0];
+                popup_2abad658c4c9240f05631ffb1b719bea.setContent(html_696d701f772e11bb529618fc77d3ac21);
+            
+        
+
+        marker_0a8d42d283109528bba5b745ec4f817c.bindPopup(popup_2abad658c4c9240f05631ffb1b719bea)
+        ;
+
+        
+    
+    
+                marker_0a8d42d283109528bba5b745ec4f817c.setIcon(icon_89bf39343de27e5cbcfa9c9cd2c65c14);
+            
+    
+            var marker_d1c30d5e74a8055015f5a6f6b8584199 = L.marker(
+                [41.0985, 28.981],
+                {
+}
+            ).addTo(map_945f33fd423659e476dd707599f73870);
+        
+    
+            var icon_fd3dc8ee57bf61c1489581d2116e5c70 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7d4e9a233384b63c7979678beca4e96a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a33b02fa5ba96ffef945abcc83beaa1f = $(`<div id="html_a33b02fa5ba96ffef945abcc83beaa1f" style="width: 100.0%; height: 100.0%;"><b> Kağıthane İtfaye İstasyonu</b><br>Durum: Mobilizasyona Hazır</div>`)[0];
+                popup_7d4e9a233384b63c7979678beca4e96a.setContent(html_a33b02fa5ba96ffef945abcc83beaa1f);
+            
+        
+
+        marker_d1c30d5e74a8055015f5a6f6b8584199.bindPopup(popup_7d4e9a233384b63c7979678beca4e96a)
+        ;
+
+        
+    
+    
+                marker_d1c30d5e74a8055015f5a6f6b8584199.setIcon(icon_fd3dc8ee57bf61c1489581d2116e5c70);
+            
+</script>
+</html>
