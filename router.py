@@ -52,3 +52,50 @@ def determine_best_responder(campus_coords: list, cendere_flooded: bool = False)
         return LOGISTICS_REGISTRY["AFAD"] 
     else:
         return LOGISTICS_REGISTRY["FIRE_STATION"]
+def optimize_logistics_dispatch(cendere_flooded: bool = False) -> dict:
+
+    return {
+        key: determine_best_responder(campus["coords"], cendere_flooded)
+        for key, campus in ISU_CAMPUSES.items()
+    }
+
+def generate_dual_campus_map(dispatch_results: dict):
+
+    carto_voyager = "https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=cb1_50vt_1_504d45160fd062dea54e09ec"
+
+    carto_attr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://cartodb.com/">CARTO</a>'
+
+    emergency_map = folium.Map(
+        location=[41.1050, 28.9855], 
+        zoom_start=14, 
+        control_scale=True, 
+        tiles=carto_voyager,
+        attr=carto_attr)
+
+
+    for key, campus in ISU_CAMPUSES.items():
+        assigned = dispatch_results[key]
+
+        folium.Marker(
+            location = campus["coords"],
+            popup = f"<b> {campus['name']}</b><br> Görevli Güç:{assigned['assets']}<br>Rota: {assigned['safety_status']}",
+            icon = folium.Icon(color=campus["color"], icon="exclamation-sign")
+        ).add_to(emergency_map)
+
+        folium.PolyLine(
+            locations = [assigned["coords"], campus["coords"]],
+            color = assigned["color"],
+            weight = 5,
+            opacity = 0.8,
+            tooltip = f" {campus['name']} Tahliye Koridoru ({assigned['name']})"
+        ).add_to(emergency_map)
+
+    for base in LOGISTICS_REGISTRY.values():
+
+        folium.Marker(
+            location = base["coords"],
+            popup = f"<b> {base['name']}</b><br>Durum: Mobilizasyona Hazır",
+            icon = folium.Icon(color=base["color"], icon="home")
+        ).add_to(emergency_map)
+
+    emergency_map.save(OUTPUT_MAP_FILE)
